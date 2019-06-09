@@ -1,4 +1,4 @@
-FROM alpine:3.9
+FROM alpine:3.9 AS builder
 
 LABEL maintainer="jbbodart"
 
@@ -46,10 +46,10 @@ RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
   && ./autogen.sh \
   && ./configure \
   && make -j ${NB_CORES} \
-  && make install
+  && make install \
 
 # compile rtorrent
-  RUN cd /tmp \
+  && cd /tmp \
   && git clone https://github.com/rakshasa/rtorrent.git \
   && cd /tmp/rtorrent \
   && mkdir /usr/include/ncursesw \
@@ -90,10 +90,10 @@ RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
   && git clone https://github.com/Phlooo/ruTorrent-MaterialDesign /var/www/webapps/rutorrent/plugins/theme/themes/MaterialDesign \
   && cd /var/www/webapps/rutorrent/plugins/ \
   && git clone https://github.com/xombiemp/rutorrentMobile \
-  && git clone https://github.com/dioltas/AddZip 
+  && git clone https://github.com/dioltas/AddZip \
 
 # Install flood
-  RUN mkdir -p /usr/local/flood \
+  && mkdir -p /usr/local/flood \
   && cd /usr/local/flood \
   && git clone https://github.com/jfurrow/flood . \
   && mv /tmp/config.js config.js \
@@ -131,7 +131,7 @@ COPY config/nginx.conf /etc/nginx/nginx.conf
 # Configure supervisor
 RUN sed -i -e "s/loglevel=info/loglevel=error/g" /etc/supervisord.conf
 COPY config/rtorrentvpn_supervisord.conf /etc/supervisor.d/rtorrentvpn.ini
-COPY config/supervisord.conf /etc/supervisord.conf
+#COPY config/supervisord.conf /etc/supervisord.conf
 
 # Set-up rTorrent
 COPY config/rtorrent.rc /home/rtorrent/rtorrent.rc
