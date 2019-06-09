@@ -31,9 +31,9 @@ RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
 
 # compile xmlrpc-c
   && cd /tmp \
-  && curl -O https://netix.dl.sourceforge.net/project/xmlrpc-c/Xmlrpc-c%20Super%20Stable/1.39.13/xmlrpc-c-1.39.13.tgz \
-  && tar zxvf xmlrpc-c-1.39.13.tgz \
-  && cd xmlrpc-c-1.39.13 \
+  && curl -O https://pilotfiber.dl.sourceforge.net/project/xmlrpc-c/Xmlrpc-c%20Super%20Stable/1.51.03/xmlrpc-c-1.51.03.tgz \
+  && tar zxvf xmlrpc-c-1.51.03.tgz \
+  && cd xmlrpc-c-1.51.03 \
   && ./configure --enable-libxml2-backend --disable-cgi-server --disable-libwww-client --disable-wininet-client --disable-abyss-server \
   && make -j ${NB_CORES} \
   && make install \
