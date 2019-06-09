@@ -90,14 +90,14 @@ RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
   && git clone https://github.com/Phlooo/ruTorrent-MaterialDesign /var/www/webapps/rutorrent/plugins/theme/themes/MaterialDesign \
   && cd /var/www/webapps/rutorrent/plugins/ \
   && git clone https://github.com/xombiemp/rutorrentMobile \
-  && git clone https://github.com/dioltas/AddZip \
+  && git clone https://github.com/dioltas/AddZip 
 
 # Install flood
-  && mkdir -p /usr/local/flood \
+  RUN mkdir -p /usr/local/flood \
   && cd /usr/local/flood \
   && git clone https://github.com/jfurrow/flood . \
-  && mv /tmp/config.js config.js 
-  RUN npm config set unsafe-perm true \
+  && mv /tmp/config.js config.js \
+  && npm config set unsafe-perm true \
   && npm install -g node-gyp \
   && npm config set unsafe-perm false \
   && npm install \
