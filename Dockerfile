@@ -16,7 +16,7 @@ COPY config/flood_config.js /tmp/config.js
 RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
   && addgroup -g ${GID} rtorrent \
   && adduser -h /home/rtorrent -s /bin/sh -G rtorrent -D -u ${UID} rtorrent \
-  && build_pkgs="build-base git libtool automake autoconf tar xz binutils curl-dev cppunit-dev libressl-dev zlib-dev linux-headers ncurses-dev libxml2-dev" \
+  && build_pkgs="build-base svn git libtool automake autoconf tar xz binutils curl-dev cppunit-dev libressl-dev zlib-dev linux-headers ncurses-dev libxml2-dev" \
   && runtime_pkgs="supervisor shadow su-exec nginx ca-certificates php7 php7-fpm php7-json openvpn curl python2 nodejs nodejs-npm ffmpeg sox unzip unrar" \
   && apk -U upgrade \
   && apk add --no-cache --virtual=build-dependencies ${build_pkgs} \
@@ -31,7 +31,7 @@ RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
 
 # compile xmlrpc-c
   && cd /tmp \
-  && curl -O https://pilotfiber.dl.sourceforge.net/project/xmlrpc-c/Xmlrpc-c%20Super%20Stable/1.51.03/xmlrpc-c-1.51.03.tgz \
+  && svn checkout http://svn.code.sf.net/p/xmlrpc-c/code/super_stable/ xmlrpc-c \
   && tar zxvf xmlrpc-c-1.51.03.tgz \
   && cd xmlrpc-c-1.51.03 \
   && ./configure --enable-libxml2-backend --disable-cgi-server --disable-libwww-client --disable-wininet-client --disable-abyss-server \
