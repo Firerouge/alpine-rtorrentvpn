@@ -96,8 +96,10 @@ RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
   && mkdir -p /usr/local/flood \
   && cd /usr/local/flood \
   && git clone https://github.com/jfurrow/flood . \
-  && mv /tmp/config.js config.js \
+  && mv /tmp/config.js config.js 
+  RUN npm config set unsafe-perm true \
   && npm install -g node-gyp \
+  && npm config set unsafe-perm false
   && npm install \
   # workaround for "Illegal instruction" when using argon2 on some CPUs
   && sed -i -e "s/\"-march=native\", //g" /usr/local/flood/node_modules/argon2/binding.gyp \
