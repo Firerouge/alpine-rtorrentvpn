@@ -16,7 +16,7 @@ COPY config/flood_config.js /tmp/config.js
 RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
   && addgroup -g ${GID} rtorrent \
   && adduser -h /home/rtorrent -s /bin/sh -G rtorrent -D -u ${UID} rtorrent \
-  && build_pkgs="build-base subversion git libtool automake autoconf tar xz binutils curl-dev cppunit-dev libressl-dev zlib-dev linux-headers ncurses-dev ncurses-libs ncurses-static libxml2-dev" \
+  && build_pkgs="build-base subversion git libtool automake autoconf tar xz binutils curl-dev cppunit-dev libressl-dev zlib-dev linux-headers ncurses-dev ncurses-libs ncurses-static ncurses5-widec-libs libxml2-dev" \
   && runtime_pkgs="supervisor shadow su-exec nginx ca-certificates php7 php7-fpm php7-json openvpn curl python2 nodejs nodejs-npm ffmpeg sox unzip unrar" \
   && apk -U upgrade \
   && apk add --no-cache --virtual=build-dependencies ${build_pkgs} \
@@ -46,15 +46,15 @@ RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
   && ./autogen.sh \
   && ./configure \
   && make -j ${NB_CORES} \
-  && make install \
+  && make install
 
 # compile rtorrent
-  && cd /tmp \
+  RUN cd /tmp \
   && git clone https://github.com/rakshasa/rtorrent.git \
   && cd /tmp/rtorrent \
   && ./autogen.sh \
-  && ./configure --with-xmlrpc-c
-  RUN make -j ${NB_CORES} \
+  && ./configure --with-xmlrpc-c \
+  && make -j ${NB_CORES} \
   && make install \
 
 # compile mediainfo
