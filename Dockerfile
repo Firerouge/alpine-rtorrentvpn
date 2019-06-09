@@ -99,7 +99,7 @@ RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
   && mv /tmp/config.js config.js 
   RUN npm config set unsafe-perm true \
   && npm install -g node-gyp \
-  && npm config set unsafe-perm false
+  && npm config set unsafe-perm false \
   && npm install \
   # workaround for "Illegal instruction" when using argon2 on some CPUs
   && sed -i -e "s/\"-march=native\", //g" /usr/local/flood/node_modules/argon2/binding.gyp \
