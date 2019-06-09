@@ -16,7 +16,7 @@ COPY config/flood_config.js /tmp/config.js
 RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
   && addgroup -g ${GID} rtorrent \
   && adduser -h /home/rtorrent -s /bin/sh -G rtorrent -D -u ${UID} rtorrent \
-  && build_pkgs="build-base subversion git libtool automake autoconf tar xz binutils curl-dev cppunit-dev libressl-dev zlib-dev linux-headers ncurses-dev libxml2-dev" \
+  && build_pkgs="build-base subversion git libtool automake autoconf tar xz binutils curl-dev cppunit-dev libressl-dev zlib-dev linux-headers ncurses-dev libncursesw5-dev libxml2-dev" \
   && runtime_pkgs="supervisor shadow su-exec nginx ca-certificates php7 php7-fpm php7-json openvpn curl python2 nodejs nodejs-npm ffmpeg sox unzip unrar" \
   && apk -U upgrade \
   && apk add --no-cache --virtual=build-dependencies ${build_pkgs} \
