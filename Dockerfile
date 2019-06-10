@@ -137,8 +137,7 @@ COPY config/supervisord.conf /etc/supervisord.conf
 COPY config/rtorrent.rc /home/rtorrent/rtorrent.rc
 # Set-up ruTorrent
 COPY config/rutorrent_config.php /var/www/rutorrent/conf/config.php
-RUN chown rtorrent:rtorrent /home/rtorrent/rtorrent.rc /var/www/rutorrent/conf/config.php \
-  && ln -sf  /etc/supervisor/supervisord.conf /etc/supervisord.conf
+RUN chown rtorrent:rtorrent /home/rtorrent/rtorrent.rc /var/www/rutorrent/conf/config.php 
 # COPY config/rutorrent_plugins.ini /var/www/rutorrent/conf/plugins.ini
 # COPY config/rutorrent_autotools.dat /var/www/rutorrent/share/settings/autotools.dat
 # RUN sed -i -e "s/\$autowatch_interval =.*/\$autowatch_interval = 10;/g" /var/www/rutorrent/plugins/autotools/conf.php
