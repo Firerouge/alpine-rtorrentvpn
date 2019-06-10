@@ -9,16 +9,17 @@ directory.default.set = (cat, "/data/incomplete/")
 
 # Other operational settings
 encoding.add = utf8
+system.daemon.set = true
 system.umask.set = 0027
 system.cwd.set = (directory.default)
 pieces.hash.on_completion.set = yes
 network.port_range.set = 49314-49314
 network.port_random.set = no
 trackers.use_udp.set = yes
-protocol.encryption.set = allow_incoming,try_outgoing,enable_retry
-dht.mode.set = auto
+protocol.encryption.set = require,require_RC4
+dht.mode.set = disable
 dht.port.set = 49313
-protocol.pex.set = yes
+protocol.pex.set = no
 pieces.preload.type.set = 1
 
 # Global upload and download rate in KiB. "0" for unlimited.
