@@ -131,7 +131,7 @@ COPY config/nginx.conf /etc/nginx/nginx.conf
 # Configure supervisor
 RUN sed -i -e "s/loglevel=info/loglevel=error/g" /etc/supervisord.conf
 COPY config/rtorrentvpn_supervisord.conf /etc/supervisor.d/rtorrentvpn.ini
-#COPY config/supervisord.conf /etc/supervisord.conf
+COPY config/supervisord.conf /etc/supervisord.conf
 
 # Set-up rTorrent
 COPY config/rtorrent.rc /home/rtorrent/rtorrent.rc
