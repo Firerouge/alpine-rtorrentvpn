@@ -31,9 +31,9 @@ RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
 
 # compile xmlrpc-c
   && cd /tmp \
-  && svn checkout http://svn.code.sf.net/p/xmlrpc-c/code/super_stable/ xmlrpc-c \
+  && svn checkout http://svn.code.sf.net/p/xmlrpc-c/code/release_number/01.39.13/ xmlrpc-c \
   && cd xmlrpc-c \
-  && ./configure --enable-libxml2-backend --disable-cgi-server --disable-libwww-client --disable-wininet-client \
+  && ./configure --enable-libxml2-backend --disable-cgi-server --disable-libwww-client --disable-wininet-client --disable-abyss-server \
   && make -j ${NB_CORES} \
   && make install \
   && make -C tools -j ${NB_CORES} \
