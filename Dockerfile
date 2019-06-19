@@ -50,6 +50,8 @@ RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
   && make install \
 
 # compile rtorrent
+  && mkdir /usr/include/ncursesw \
+  && ln -s /usr/include/curses.h /usr/include/ncursesw/curses.h \
   && cd /tmp \
   && git clone https://github.com/rakshasa/rtorrent.git \
   && cd /tmp/rtorrent \
