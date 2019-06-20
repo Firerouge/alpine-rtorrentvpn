@@ -10,18 +10,25 @@ ENV DNS_SERVER_IP='9.9.9.9'
 
 ARG MEDIAINFO_VER="18.12"
 
+# Address https://github.com/nodejs/docker-node/issues/813
+RUN wget https://raw.githubusercontent.com/jubel-han/dockerfiles/master/common/stack-fix.c -P /lib/
+ 
 # Add flood configuration before build
 COPY config/flood_config.js /tmp/config.js
 
-RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
-  && addgroup -g ${GID} rtorrent \
+RUN addgroup -g ${GID} rtorrent \
   && adduser -h /home/rtorrent -s /bin/sh -G rtorrent -D -u ${UID} rtorrent \
   && build_pkgs="build-base git libtool automake autoconf tar xz binutils curl-dev cppunit-dev libressl-dev zlib-dev linux-headers ncurses-dev libxml2-dev" \
   && runtime_pkgs="supervisor shadow su-exec nginx ca-certificates php7 php7-fpm php7-json openvpn curl python2 nodejs nodejs-npm ffmpeg sox unzip unrar" \
   && apk -U upgrade \
   && apk add --no-cache --virtual=build-dependencies ${build_pkgs} \
   && apk add --no-cache ${runtime_pkgs} \
-
+  
+  # Address https://github.com/nodejs/docker-node/issues/813
+  && gcc -shared -fPIC /lib/stack-fix.c -o /lib/stack-fix.so  
+ENV LD_PRELOAD /lib/stack-fix.so
+  
+RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
 # compile mktorrent
   && cd /tmp \
   && git clone https://github.com/esmil/mktorrent \
@@ -92,7 +99,7 @@ RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
   && cd /var/www/webapps/rutorrent/plugins/ \
   && git clone https://github.com/xombiemp/rutorrentMobile \
   && git clone https://github.com/dioltas/AddZip \
-
+  
 # Install flood
   && mkdir -p /usr/local/flood \
   && cd /usr/local/flood \
